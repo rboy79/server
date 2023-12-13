@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  const API_URL = "https://d1e7-101-99-23-76.ngrok-free.app/data";
+  const API_URL =
+    "https://b844-101-99-23-76.ngrok-free.app/api/collections/shoes/records";
 
   let itemList = [];
 
@@ -8,8 +9,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   const display = document.querySelector(".item-container");
 
-  for (let i = 0; i < result.data.length; i++) {
-    itemList.push(result.data[i]);
+  for (let i = 0; i < result.items.length; i++) {
+    itemList.push(result.items[i]);
 
     display.innerHTML += `
         <div class="item">
