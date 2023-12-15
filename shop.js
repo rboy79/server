@@ -33,37 +33,41 @@ document.addEventListener("DOMContentLoaded", async function () {
   const inputImage = document.querySelector(".input-image");
   const addItem = document.querySelector(".add-btn");
 
-  addItem.addEventListener("click", () => {
+  addItem.addEventListener("click", async () => {
     if (!inputName.value || !inputPrice.value || !inputImage.value) {
       return;
     }
 
+    const newItem = {
+      title: inputName.value,
+      price: inputPrice.value,
+      url: inputImage.value,
+    };
+
     const options = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: `{"title":"${inputName.value}",
-        "url":"${inputImage.value}",
-        "price":"${inputPrice.value}"}`,
+      body: JSON.stringify(newItem),
     };
 
-    fetch(
+    const response = await fetch(
       "https://7373-172-188-41-15.ngrok-free.app/api/collections/shoes/records",
       options
     );
 
-    for (let j = itemList.length - 1; j < itemList.length; j++) {
-      display.innerHTML += `
+    const result = await response.json();
+
+    display.innerHTML += `
                 <div class="item">
                         <div class="item-img">
-                            <img src="${itemList[j].imgUrl}" alt="item picture">
+                            <img class="imgbase" src="${result.url}" alt="item picture">
                         </div>
                         <div class="rating"> &#9733; &#9733; &#9733; &#9733; &#9733; </div>
-                        <div class="item-title"> ${itemList[j].title} </div>
-                        <div class="item-price"> <strong> $${itemList[j].price} </strong></div>
+                        <div class="item-title"> ${result.title} </div>
+                        <div class="item-price"> <strong> $${result.price} </strong></div>
         
                 </div>
             `;
-      input.value = "";
-    }
+    input.value = "";
   });
 });
