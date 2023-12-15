@@ -78,6 +78,10 @@ header {
     height: 250px;
 }
 
+.imgbase {
+    width: 100%;
+    height: auto;
+}
 
 .rating {
     color: rgb(225, 163, 8);

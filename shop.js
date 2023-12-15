@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
   const API_URL =
-    "https://b844-101-99-23-76.ngrok-free.app/api/collections/shoes/records";
+    "https://7373-172-188-41-15.ngrok-free.app/api/collections/shoes/records";
 
   let itemList = [];
 
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     display.innerHTML += `
         <div class="item">
                 <div class="item-img">
-                    <img src="${itemList[i].url}" alt="item picture">
+                    <img class="imgbase" src="${itemList[i].url}" alt="item picture">
                 </div>
                 <div class="rating"> &#9733; &#9733; &#9733; &#9733; &#9733; </div>
                 <div class="item-title"> ${itemList[i].title} </div>
@@ -38,25 +38,32 @@ document.addEventListener("DOMContentLoaded", async function () {
       return;
     }
 
-    const newItem = makeItem(
-      inputName.value,
-      inputPrice.value,
-      inputImage.value
+    const options = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: `{"title":"${inputName.value}",
+        "url":"${inputImage.value}",
+        "price":"${inputPrice.value}"}`,
+    };
+
+    fetch(
+      "https://7373-172-188-41-15.ngrok-free.app/api/collections/shoes/records",
+      options
     );
 
-    itemList.push(newItem);
-
-    display.innerHTML += `
-              <div class="item">
-                      <div class="item-img">
-                          <img src="${itemList[j].url}" alt="item picture">
-                      </div>
-                      <div class="rating"> &#9733; &#9733; &#9733; &#9733; &#9733; </div>
-                      <div class="item-title"> ${itemList[j].title} </div>
-                      <div class="item-price"> <strong> $${itemList[j].price} </strong></div>
-      
-              </div>
-          `;
-    input.value = "";
+    for (let j = itemList.length - 1; j < itemList.length; j++) {
+      display.innerHTML += `
+                <div class="item">
+                        <div class="item-img">
+                            <img src="${itemList[j].imgUrl}" alt="item picture">
+                        </div>
+                        <div class="rating"> &#9733; &#9733; &#9733; &#9733; &#9733; </div>
+                        <div class="item-title"> ${itemList[j].title} </div>
+                        <div class="item-price"> <strong> $${itemList[j].price} </strong></div>
+        
+                </div>
+            `;
+      input.value = "";
+    }
   });
 });
